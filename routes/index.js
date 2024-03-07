@@ -107,11 +107,12 @@ router.get('/profile', function (req, res, next) {
     const userId = decoded.userId;
 
     User.findOne({ _id: userId }, function (err, data) {
+      console.log(data.firstName,"firname");
       if (!data) {
         return res.status(404).send({ "Error": "User not found" });
       }
-
-      return res.render('data.ejs', { "name": data.username, "email": data.email });
+      return res.render('data.ejs', { "Id":data.id,"name": data.username, "email": data.email, "firstName":data.firstName, "lastName":data.lastName, "city":data.city, "state":data.state, "country":data.country});
+     
     });
   } catch (error) {
     console.error("Error: " + error);
