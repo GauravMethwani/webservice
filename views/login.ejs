@@ -1,12 +1,33 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>Login</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <link rel="stylesheet" href="./css/main.css">
+
+
+  <style>
+    body {
+      background-color: #f8f9fa;
+      padding-top: 50px;
+    }
+
+    .form-container {
+      background-color: #ffffff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .mssg {
+      margin-top: 20px;
+    }
+  </style>
 
   <script type="text/javascript">
     $(document).ready(function () {
@@ -21,135 +42,52 @@
           dataType: "json",
           success: function (response) {
             $('#form')[0].reset();
-
+            document.getElementById("check").innerHTML = response.Success;
+            setTimeout(function () {
+              document.getElementById("check").innerHTML = "";
+            }, 3000);
             if (response.Success == "Success!") {
-              showLoginSuccessModal();
-              // Redirect to profile after a delay (e.g., 3 seconds)
-              setTimeout(function () {
-                window.location.href = "/profile";
-              }, 3000);
-            } else {
-              handleLoginError(response.Error || "Please check Email and password.");
-            }
+              document.getElementById("aa").click();
+            };
           },
           error: function () {
-            handleLoginError("An error . Please try again.");
           }
-        });
+        })
       });
 
-      function handleLoginError(message) {
-        if (message.toLowerCase().includes("already registered")) {
-          // Show a special popup for "email already registered" case
-          $("#emailRegisteredModal").modal("show");
-        } else if (message.toLowerCase().includes("incorrect password")) {
-          // Show a special popup for "incorrect password" case
-          $("#incorrectPasswordModal").modal("show");
-        } else {
-          // Show a generic error modal for other cases
-          showErrorModal(message);
-        }
-      }
-
-      function showErrorModal(message) {
-        $("#errorModalBody").text(message);
-        $("#errorModal").modal("show");
-      }
-
-      function showLoginSuccessModal() {
-        $("#loginSuccessModal").modal("show");
-      }
-
     });
+
+
   </script>
 </head>
 
 <body>
-  <div class="col-md-4 col-md-offset-4">
-    <div>
-      <p>Login</p>
-    </div>
-    <div class="form-group">
-      <form id="form" method="post">
-        <input type="text" name="email" placeholder="E-mail" required="" class="form-control"><br />
-        <input type="password" name="password" placeholder="Password" required="" class="form-control"><br />
-        <input type="submit" value="Login" class="btn btn-success">
-      </form>
-    </div>
-    <div class="mssg bg-danger">
-      <span id="check"></span>
-    </div>
-    <div id="LangTable"><a href="/profile" id="aa"></a>
-    </div>
-    <div><span>Do you forgot password?</span><a href="/forgetpass">Click here</a>
-    </div>
-    <div><span>Create a new Account?</span><a href="/">Register here</a>
-    </div>
-
-  </div>
-
-  <!-- Email Already Registered Modal -->
-  <div id="emailRegisteredModal" class="modal fade" role="dialog">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Email Already Registered</h4>
-        </div>
-        <div class="modal-body">
-          <p>The provided email is already registered. Please use a different email or proceed to the login page.</p>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Incorrect Password Modal -->
-  <div id="incorrectPasswordModal" class="modal fade" role="dialog">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Incorrect Password</h4>
-        </div>
-        <div class="modal-body">
-          <p>The provided password is incorrect. Please double-check your password or use the "Forgot Password" link.</p>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Generic Error Modal -->
-  <div id="errorModal" class="modal fade" role="dialog">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Error</h4>
-        </div>
-        <div class="modal-body" id="errorModalBody"></div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Login Success Modal -->
-  <div id="loginSuccessModal" class="modal fade" role="dialog">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Login Successful</h4>
-        </div>
-        <div class="modal-body">
-          <p>Login successful. Redirecting to your profile...</p>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4 col-md-offset-4">
+        <div class="form-container">
+          <p class="text-center">Login</p>
+          <form id="form" method="post">
+            <div class="form-group">
+              <input type="text" name="email" placeholder="E-mail" required="" class="form-control">
+            </div>
+            <div class="form-group">
+              <input type="password" name="password" placeholder="Password" required="" class="form-control">
+            </div>
+            <div class="form-group">
+              <input type="submit" value="Login" class="btn btn-success">
+            </div>
+          </form>
+          <div class="mssg bg-danger text-center">
+            <span id="check"></span>
+          </div>
+          <div class="text-center">
+            <span>Forgot your password? <a href="/forgetpass">Click here</a></span><br>
+            <span>Create a new account? <a href="/">Register here</a></span>
+          </div>
+          <div class="text-center">
+            <a href="/profile" id="aa"></a>
+          </div>
         </div>
       </div>
     </div>
